@@ -30,3 +30,29 @@ uploadArchives {
     }
 }
 
+apply plugin: 'checkstyle'
+
+checkstyle {
+    repositories {
+        maven { url "http://sevntu-checkstyle.github.com/sevntu.checkstyle/maven2" }
+    }
+
+    dependencies{
+        checkstyle 'com.puppycrawl.tools:checkstyle:6.10'
+    }
+
+    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+    ignoreFailures true
+}
+////
+//task checkstyleQaprodDebug(type: Checkstyle) {
+//    configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+//    source 'src'
+//    include '**/*.java'
+//    exclude '**/gen/**'
+//
+//    classpath = files(project.configurations.compile.asPath)
+//
+//    ignoreFailures = true
+//}
+

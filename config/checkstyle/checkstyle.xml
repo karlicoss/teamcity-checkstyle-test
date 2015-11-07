@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Puppy Crawl//DTD Check Configuration 1.2//EN"
+    "http://www.puppycrawl.com/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+    <module name="SuppressionFilter">
+        <property name="file" value="config/checkstyle/suppressions.xml"/>
+    </module>
+
+    <!--http://checkstyle.sourceforge.net/config_sizes.html-->
+    <module name="FileLength">
+        <property name="max" value="1000"/>
+    </module>
+
+    <!--Forbid tab characters-->
+    <module name="FileTabCharacter"/>
+
+    <!-- Filter out Checkstyle warnings that have been suppressed with the @SuppressWarnings annotation -->
+    <module name="SuppressWarningsFilter" />
+
+    <!-- I disabled these checks yet since I don't really understand how do they fit together with
+         the TreeWalker checks -->
+    <!-- Prohibit consecutive empty lines (except the lines after package/import) -->
+    <!--<module name="RegexpMultiline">-->
+        <!--<property name="format" value="\n *(?!package )(?!import )[^\n]+\n{3,}" />-->
+        <!--<property name="message" value="two or more consecutive empty lines" />-->
+    <!--</module>-->
+    <!--&lt;!&ndash; Prohibit an empty after { or before } &ndash;&gt;-->
+    <!--<module name="RegexpMultiline">-->
+        <!--<property name="format" value="\n\n\s+\}[^\n]{0,10}\n" />-->
+        <!--<property name="message" value="an empty line before '}'" />-->
+    <!--</module>-->
+    <!--<module name="RegexpMultiline">-->
+        <!--<property name="format" value="\n\s+[^\n]{1,10}\{\n\n" />-->
+        <!--<property name="message" value="an empty line after a short line that ends with '{'" />-->
+    <!--</module>-->
+
+    <module name="TreeWalker">
+        <!-- Equals checks -->
+            <!--See http://checkstyle.sf.net/config_coding.html-->
+            <module name="CovariantEquals"/>
+            <!-- prefer "cstring".equals(str) over str.equals("cstring")-->
+            <module name="EqualsAvoidNull"/>
+            <!-- Ensure we don't use ==/!= for string comparison -->
+            <module name="StringLiteralEquality"/>
+            <!-- if equals overloaded, hashcode has to be overloaded as well -->
+            <module name="EqualsHashCode"/>
+
+        <!-- Bad practice/code smell -->
+            <!-- checks for assignments in subexpressions -->
+            <module name="InnerAssignment"/>
+            <!-- checks that i in for (int i = 0; ;) is not modified inside the loop-->
+            <module name="ModifiedControlVariable"/>
+            <!-- checks for braces around if/then clauses -->
+            <module name="NeedBraces">
+                <property name="tokens" value="LITERAL_IF, LITERAL_ELSE"/>
+            </module>
+
+        <!-- Switch/case checks -->
+            <module name="MissingSwitchDefault"/>
+            <module name="DefaultComesLast"/>
+            <!-- Assure cases contain break at the end -->
+            <module name="FallThrough">
+                <property name="checkLastCaseGroup" value="true"/>
+            </module>
+
+        <!-- Overcompicated expressions -->
+            <module name="SimplifyBooleanExpression"/>
+            <module name="SimplifyBooleanReturn"/>
+
+        <!-- Declaration order -->
+            <!-- 1. static variables 2. instance variables 3. constructors 4. methods-->
+            <!-- TODO: how to ignore parcelable creators? -->
+            <module name="DeclarationOrder"/>
+            <!-- See http://checkstyle.sourceforge.net/config_design.html-->
+            <module name="InnerTypeLast"/>
+
+        <!-- Size violations -->
+            <!-- See http://checkstyle.sf.net/config_sizes.html -->
+            <module name="LineLength">
+                <property name="max" value="150"/>
+            </module>
+            <module name="MethodLength">
+                <property name="max" value="200"/>
+                <property name="countEmpty" value="false"/>
+            </module>
+
+        <!-- Whitespace/spaces/empty lines checks -->
+            <module name="WhitespaceAfter">
+                <property name="tokens" value="COMMA, SEMI, TYPECAST"/>
+            </module>
+            <module name="WhitespaceAround"/>
+            <!-- Forbid spaces before/after parentheses -->
+            <module name="ParenPad">
+                <property name="tokens" value="CTOR_CALL, METHOD_CALL, SUPER_CTOR_CALL"/>
+                <property name="option" value="nospace"/>
+            </module>
+            <!-- Empty line after -->
+            <module name="EmptyLineSeparator">
+                <property name="tokens" value="PACKAGE_DEF, CLASS_DEF, CTOR_DEF, METHOD_DEF"/>
+            </module>
+
+        <!-- A useful module, which allows to configure the style of wrapping dots and commas-->
+        <!--<module name="SeparatorWrap"/>-->
+
+        <!-- Imports -->
+            <module name="AvoidStarImport"/>
+            <module name="IllegalImport"/>
+            <module name="RedundantImport"/>
+            <module name="UnusedImports">
+                <property name="processJavadoc" value="true"/>
+            </module>
+
+        <!-- Useless code blocks -->
+            <module name="EmptyBlock"/>
+            <module name="EmptyCatchBlock"/>
+
+        <!-- Naming -->
+            <!-- checks that local variable does not shadow a field-->
+            <module name="HiddenField">
+                <property name="ignoreConstructorParameter" value="true"/>
+                <property name="ignoreSetter" value="true"/>
+                <property name="setterCanReturnItsClass" value="true"/> <!-- for Builders -->
+            </module>
+
+        <!-- misc -->
+        <!-- Make the @SuppressWarnings annotations available to Checkstyle -->
+        <module name="SuppressWarningsHolder" />
+
+        <!-- needs proper configuration -->
+        <!--<module name="Indentation"/>-->
+        <module name="EmptyStatement"/>
+        <module name="HideUtilityClassConstructor"/>
+        <!-- checks for numeric constants not defined as constants -->
+        <module name="MagicNumber"/>
+        <module name="UnnecessaryParentheses"/>
+        <module name="OneStatementPerLine"/>
+        <!--needs proper configuration-->
+        <!--<module name="VariableDeclarationUsageDistance"/>-->
+        <module name="TodoComment">
+            <property name="format" value="TODO"/>
+            <property name="severity" value="info"/>
+        </module>
+        <module name="TodoComment">
+            <property name="format" value="XXX|FIXME"/>
+            <property name="severity" value="error"/>
+        </module>
+
+    </module>
+</module>
