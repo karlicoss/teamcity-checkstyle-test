@@ -38,7 +38,7 @@ checkstyle {
     }
 
     dependencies{
-        checkstyle 'com.puppycrawl.tools:checkstyle:6.10'
+        checkstyle 'com.puppycrawl.tools:checkstyle:6.11'
     }
 
     configFile file("${project.rootDir}/config/checkstyle/checkstyle.xml")
